@@ -205,6 +205,15 @@ class MenuItem {
 		return this;
 	}
 
+	DefaultIndex(index) {
+
+		if (index == -1) index = value.length - 1
+
+		this.index = index;
+
+		return this;
+	}
+	
 	Style(style) {
 		this.style = style;
 
