@@ -206,11 +206,18 @@ class MenuItem {
 	}
 
 	DefaultIndex(index) {
-
-		if (index == -1) index = value.length - 1
-
-		this.index = index;
-
+		if (Array.isArray(value))
+		{
+			if (index < 0)
+			{
+				if(index > -(value.length)) this.index = value.length - index;
+			}
+			else
+			{
+				if(index < value.length) this.index = index;
+			}
+		}
+		
 		return this;
 	}
 	
