@@ -1,7 +1,7 @@
 
 function _ChangeMenuValue(index, varname, value) {
 
-    if (typeof mp !== 'undefined') mp.trigger('tr_test_drawRectValue', varname, value);
+    if (typeof mp !== 'undefined') mp.trigger('Trigger_Any_Funtion', varname, value);
     window.thismenu.menu.items[index].value = value;
 }
 
