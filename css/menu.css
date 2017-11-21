@@ -441,3 +441,40 @@ background: linear-gradient(to right, rgba(242,67,67,1) 0%, rgba(242,67,67,0.8) 
 	background: #fff;
 	border-radius: 50%;
 }
+
+#inputDiv {
+    display: none;
+    position: absolute;
+    margin: 0px 33%;
+    padding: 9px 11px;
+    top: 45%;
+    width: 33%;
+    border-radius: 1px;
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#inputDiv_title {
+    display: none;
+    background: rgba(226, 204, 129, 0.6);
+    margin: 2px;
+    padding: 0px 3px;
+    border-radius: 1px;
+    font-size: 24px;
+}
+
+#inputDiv_input {
+    background-color: rgba(0,0,0,0.5);
+    border: 1px solid rgb(75, 75, 75);
+    height: 26px;
+    width: calc(100% - 3px - 3px);
+    margin-top: 7px;
+    padding: 1px 3px;
+    box-sizing: border-box;
+    color: lightgray;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 26px;
+}
