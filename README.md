@@ -3,7 +3,9 @@
 ![In action](http://i.imgur.com/CejVRFb.gif)
 ![Update](http://i.imgur.com/5uNAo5f.png)
 
-### How to interact
+## How to interact
+
+#### Additionnaly in this version 'inputs' are available. See the example for details... ##
 
 Up, Down or Mouse Wheel — select menu item
 
@@ -13,7 +15,7 @@ Enter, LMB — open submenu if it exists or execute defined action
 
 Backspace, RMB — Go back in menus
 
-### FAQ
+## FAQ
 
 - If you don't know JS or Vue.js then don't bother me I don't know either
 
