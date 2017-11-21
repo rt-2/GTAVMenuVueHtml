@@ -9,7 +9,9 @@ Up, Down or Mouse Wheel — select menu item
 
 Left, Right — change item in selection "control" and change color in color picker
 
-Enter — open submenu if it exists
+Enter, LMB — open submenu if it exists or execute defined action
+
+Backspace, RMB — Go back in menus
 
 ### FAQ
 
@@ -17,4 +19,4 @@ Enter — open submenu if it exists
 
 - Post issues if you found bug or some weird shit
 
-- I didn't test it in GTA:N CEF yet so it's up to you
+- menu.min.js = menu.js -> babel -> jscompress.com
