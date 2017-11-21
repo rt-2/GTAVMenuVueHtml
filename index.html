@@ -24,6 +24,147 @@
 		margin: 200px auto;
 	}
 	</style>
+	
+	
+    <script>
+		<!-- input scripts -->
+		window.isMenuLoaded = false;
+
+		function _InputText(title, text, resultFunc) {
+
+			if (window.isMenuLoaded)
+			{
+
+				window.inputText_lastLength = 0;
+				window.InputTextActive = true;
+				if (typeof mp !== 'undefined') mp.trigger('tr_menu_InputToggle', true);
+
+				$('#inputDiv_title').text(title);
+				$('#inputDiv_text').text(text);
+				$('#inputDiv_input').val('');
+				window.InputTextFunction = resultFunc;
+
+				$('.popup-menu > ul > li:not(.active)').css('color', '#D4D5D6');
+				$('.popup-menu > ul > li:not(.active)').css('background', 'none');
+
+
+				$('#inputDiv').fadeIn(200, function () {
+					$('#inputDiv_input').focus();
+				});
+
+			}
+		}
+
+		function _exitInputText(save) {
+
+			if (typeof save !== 'undefined' && save) {
+
+				let value = $("#inputDiv_input").val();
+
+				//True/false adjustment
+				if (value == 'false') {
+					value = false;
+				}
+				if (value == 'true') {
+					value = true;
+				}
+
+				$('.popup-menu > ul > li.active div span:nth-child(2)').text($("#inputDiv_input").val());
+
+				if (typeof window.InputTextFunction !== 'undefined')
+				{
+					window.InputTextFunction(value);
+				}
+			}
+			$('#inputDiv').fadeOut(100);
+
+			window.InputTextActive = false;
+			if (typeof mp !== 'undefined') mp.trigger('tr_menu_InputToggle', false);
+
+			$('.popup-menu > ul > li').css('color', '');
+			$('.popup-menu > ul > li').css('background', '');
+
+		}
+
+		$(document).ready(function () {
+
+
+			$('body').on('wheel', function (e) {
+				if (window.InputTextActive == true || !window.isMenuLoaded) {
+
+
+					// Avoid ALL types of events
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					e.preventDefault();
+					return false;
+
+				}
+			});
+
+			$('body').on('contextmenu', function (e) { // right-click
+				if (window.InputTextActive == true || !window.isMenuLoaded) {
+					_exitInputText();
+
+					// Avoid ALL types of events
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					e.preventDefault();
+					return false;
+
+				}
+			});
+
+			$('#inputDiv_input').on('change', function (e) {
+
+				window.inputText_lastLength = $('#inputDiv_input').val().length;
+
+			});
+
+			$('body').on('keyup', function (e) {
+
+				//if(typeof mp !== 'undefined') mp.trigger('voiceChat_browserError', window.InputTextActive + ' || ' + !window.isMenuLoaded);
+				if (window.InputTextActive == true || !window.isMenuLoaded) {
+					//Controls must be stopped
+
+					//if (typeof mp !== 'undefined') mp.trigger('voiceChat_browserError', window.InputTextActive + ' && ' + window.isMenuLoaded);
+					if (window.InputTextActive && window.isMenuLoaded) {
+						if (e.keyCode == 8) { // backspace
+							//if (!$('#inputDiv_input').is(":focus")) {
+							if (
+								!$('#inputDiv_input').is(":focus") ||
+								(
+									$('#inputDiv_input').val().length == 0 &&
+									inputText_lastLength == 0
+								)
+							) {
+								_exitInputText();
+							}
+							inputText_lastLength = $('#inputDiv_input').val().length;
+						}
+						if (e.keyCode == 13) { // enter
+
+							_exitInputText(true);
+						}
+					}
+
+					//if (typeof mp !== 'undefined') mp.trigger('voiceChat_browserError', ' stopPropagation() called.');
+
+					// Avoid ALL types of events
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+					e.preventDefault();
+					return false;
+				}
+
+			});
+
+		});
+	</script>
+
 </head>
 <body>
 
@@ -36,6 +177,14 @@
 		<!-- HERE POPUP MENU HTML ENDS -->
 
 	</div>
+	
+    <div id="inputDiv">
+		
+        <div id="inputDiv_title"></div>
+        <div id="inputDiv_text"></div>
+        <input id="inputDiv_input" type="text" />
+		
+    </div>
 
 	<!-- VUE TEMPLATES -->
 
@@ -55,7 +204,7 @@
 			<ul>
 				<li v-for="(item, index) in currentMenu.items" v-if="item.visible"
 															   v-bind:class="[item.style, { active: currentMenu.index == index }]"
-															   v-on:click="processClick(index)">
+															   v-on:click="if(!window.InputTextActive) { processClick(index); }">
 					<div v-if="Object.prototype.toString.call(item.value) !== '[object Array]'">
 						<span v-if="item.value">{{ item.key }}</span>
 						<span v-if="item.value" v-html="item.value"></span>

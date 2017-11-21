@@ -1,3 +1,18 @@
+
+function _ChangeMenuValue(index, varname, value) {
+
+    if (typeof mp !== 'undefined') mp.trigger('Trigger_Any_Funtion', varname, value);
+    window.thismenu.menu.items[index].value = value;
+}
+
+function _OpenInputText(index, varname) {
+    setTimeout(function () {
+        _InputText('Input Title', 'Please insert new value for \'' + varname + '\':', function (t) {
+            _ChangeMenuValue(index, varname, t);
+        });
+    }, 10);
+}
+
 var subSubMenuInfo = new PopupMenu('Subsub menu', null, [
 	new MenuItem('There we go').Click(function() { alert("Clicked"); }),
 	new MenuItem('Currently backspace and no RMB stuff').Back()
@@ -5,9 +20,9 @@ var subSubMenuInfo = new PopupMenu('Subsub menu', null, [
 
 var submenuInfo = new PopupMenu('Submenu title', 'subtitle', [
 	new MenuItem('Something', 'LUL'),
-	new MenuItem('Computer', 'yeyyeye'),
+	new MenuItem('Change me', 'value').Click(function () { _OpenInputText(0, 'shown'); }),
 	new MenuItem('Ayyy', 'lmao'),
-	new MenuItem('Nice text', 'actually'),
+	new MenuItem('Change me too', 'value2').Click(function () { _OpenInputText(0, 'shown'); }),
 	new MenuItem('Buy', 'my pants'),
 	new MenuItem('What what', 'in the butt'),
 	new MenuItem('TExt'),
