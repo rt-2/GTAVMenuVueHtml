@@ -439,12 +439,14 @@ Vue.component('popup-menu', {
 		this.calculateLimit();
 
 		window.addEventListener('wheel', function(e) {
-			var delta = e.deltaY || e.detail || e.wheelData;
+            if (!window.InputTextActive) {
+				var delta = e.deltaY || e.detail || e.wheelData;
 
-			if (delta > 0) {
-				self.currentMenu.index++;
-			} else if(delta < 0) {
-				self.currentMenu.index--;
+				if (delta > 0) {
+					self.currentMenu.index++;
+				} else if(delta < 0) {
+					self.currentMenu.index--;
+				}
 			}
 		});
 
@@ -472,8 +474,10 @@ Vue.component('popup-menu', {
 			});
 
 			window.addEventListener('mouseup', function(e) { // Mouse event for xygrid
-				if (e.which === 1) { // LMB
-					clicked = false;
+				if (!window.InputTextActive) {
+					if (e.which === 1) { // LMB
+						clicked = false;
+					}
 				}
 			});
 
@@ -498,34 +502,36 @@ Vue.component('popup-menu', {
 
 		window.addEventListener('keyup', function(e) {
 
-			if (e.keyCode == 38) { // up
-				self.currentMenu.index--;
-			} else if (e.keyCode == 40) { // down
-				self.currentMenu.index++;
-			} else if (e.keyCode == 13) { // enter
-				self.processClick(self.currentMenu.index);
-			} else if (e.keyCode == 8) { // backspace
-				self.returnBack();
-			}
-
-			if (self.currentMenu.currentItem() != null) {
-				if (e.keyCode == 37) { // left
-					self.currentMenu.prevSelectionItem();
-				} else if (e.keyCode == 39) { // right
-					self.currentMenu.nextSelectionItem();
+            if (!window.InputTextActive) {
+				if (e.keyCode == 38) { // up
+					self.currentMenu.index--;
+				} else if (e.keyCode == 40) { // down
+					self.currentMenu.index++;
+				} else if (e.keyCode == 13) { // enter
+					self.processClick(self.currentMenu.index);
+				} else if (e.keyCode == 8) { // backspace
+					self.returnBack();
 				}
-			}
 
-			if (self.currentMenu.colorPicker) // Testing. Remove in production
-			{
-				if (e.keyCode == 37) { // left
-					self.currentMenu.prevColorItem();
-				} else if (e.keyCode == 39) { // right
-					self.currentMenu.nextColorItem();
+				if (self.currentMenu.currentItem() != null) {
+					if (e.keyCode == 37) { // left
+						self.currentMenu.prevSelectionItem();
+					} else if (e.keyCode == 39) { // right
+						self.currentMenu.nextSelectionItem();
+					}
 				}
-			}
 
-			return false;
+				if (self.currentMenu.colorPicker) // Testing. Remove in production
+				{
+					if (e.keyCode == 37) { // left
+						self.currentMenu.prevColorItem();
+					} else if (e.keyCode == 39) { // right
+						self.currentMenu.nextColorItem();
+					}
+				}
+
+				return false;
+			}
 		});
 	},
 	watch: {
